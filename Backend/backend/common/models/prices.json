@@ -1,0 +1,21 @@
+{
+  "name": "prices",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "Price": {
+      "type": "string",
+      "required": true
+    },
+    "Time": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
