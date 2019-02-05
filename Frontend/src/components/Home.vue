@@ -6,9 +6,9 @@
           <b-row class="no-margin">
             <b-col>
               <b-row>
-                <b-col class="shadow m-1 bg-white no-padding scroll">
-                  <b-nav cards>
-                    <b-nav-item cards @click="type" v-b-popover.hover="'Common carbon round steel'">CCR steel</b-nav-item>
+                <b-col class="shadow m-1 no-padding scroll">
+                  <b-nav>
+                    <b-nav-item @click="type" v-b-popover.hover="'Common carbon round steel'">CCR Steel</b-nav-item>
                     <b-nav-item @click="type1" v-b-popover.hover="'Rebar'">Rebar</b-nav-item>
                     <b-nav-item @click="type2" v-b-popover.hover="'Carbon structural steel'">CS steel</b-nav-item>
                     <b-nav-item @click="type8" v-b-popover.hover="'Wire Rod'">Wire Rod</b-nav-item>
@@ -30,14 +30,38 @@
                       style="width: 420; height: 330px;"
                       />
                        <b-col class="table-scroll"> 
-                         <b-card>
-                          <table class="table">
-                            <tr v-for="cost_Commonitem in cost_Common">
+                           <table class="table">
+                            <tr>
+                              <th>Date</th>
+                            <td v-for="(cost_Rebaritem, index) in cost_Common">
                           
-                            <th v-for="item in cost_Commonitem">{{item}}</th>
+                            <th v-for="item in cost_Rebaritem">{{cost_Common[index][0].Time}}</th>
+                            </td>
+                            </tr>
+                             <tr>
+                              <td>Production Price</td>
+                            <td v-for="(cost_Rebaritem, index) in cost_Common">
+                          
+                            <th v-for="item in cost_Rebaritem">{{cost_Common[index][0].Price}}</th>
+                            </td>
+                            </tr>
+                            <tr>
+                              <td>Cost</td>
+                            <td v-for="(cost_Rebaritem, index) in cost_Common">
+                          
+                            <th v-for="item in cost_Rebaritem">{{cost_Common[index][0].Cost}}</th>
+                            </td>
+                            </tr>
+                             <tr>
+                              <td>Profit / Loss</td>
+                              
+                           
+                            <td v-for="(cost_Rebaritem, index) in cost_Common">
+                          
+                            <th v-for="item in cost_Rebaritem">{{cost_Common[index][0].Profit}}</th>
+                            </td>
                             </tr>
                           </table>
-                         </b-card>
                       </b-col>
                   </b-col>
                   <b-col class="shadow m-1 bg-white rounded" v-if="showrebar" v-b-modal.modal2 lazy>
@@ -47,15 +71,39 @@
                       :options="chartOptions"
                       style="width: 420; height: 330px;"
                     />
-                    <b-col class="table-scroll"> 
-                        <b-card>
+                    <b-col class="table-scroll">
                           <table class="table">
-                            <tr v-for="cost_Rebaritem in cost_Rebar">
+                            <tr>
+                              <th>Date</th>
+                            <td v-for="(cost_Rebaritem, index) in cost_Rebar">
                           
-                            <th v-for="item in cost_Rebaritem">{{item}}</th>
+                            <th v-for="item in cost_Rebaritem">{{cost_Rebar[index][0].Time}}</th>
+                            </td>
+                            </tr>
+                             <tr>
+                              <td>Production Price</td>
+                            <td v-for="(cost_Rebaritem, index) in cost_Rebar">
+                          
+                            <th v-for="item in cost_Rebaritem">{{cost_Rebar[index][0].Price}}</th>
+                            </td>
+                            </tr>
+                            <tr>
+                              <td>Cost</td>
+                            <td v-for="(cost_Rebaritem, index) in cost_Rebar">
+                          
+                            <th v-for="item in cost_Rebaritem">{{cost_Rebar[index][0].Cost}}</th>
+                            </td>
+                            </tr>
+                             <tr>
+                              <td>Profit / Loss</td>
+                              
+                           
+                            <td v-for="(cost_Rebaritem, index) in cost_Rebar">
+                          
+                            <th v-for="item in cost_Rebaritem">{{cost_Rebar[index][0].Profit}}</th>
+                            </td>
                             </tr>
                           </table>
-                        </b-card>
                     </b-col>
                   </b-col>
                   <b-col class="shadow m-1 bg-white rounded" v-if="showcarbon" v-b-modal.modal3 lazy>
@@ -66,14 +114,38 @@
                       style="width: 420; height: 330px;"
                     />
                     <b-col class="table-scroll"> 
-                        <b-card>
-                          <table class="table">
-                            <tr v-for="cost_Carbonitem in cost_Carbon">
+                      <table class="table">
+                        <tr>
+                          <td>Date</td>
+                        <td v-for="(cost_Rebaritem, index) in cost_Carbon">
+                      
+                        <th v-for="item in cost_Rebaritem">{{cost_Carbon[index][0].Time}}</th>
+                        </td>
+                        </tr>
+                          <tr>
+                          <td>Production Price</td>
+                        <td v-for="(cost_Rebaritem, index) in cost_Carbon">
+                      
+                        <th v-for="item in cost_Rebaritem">{{cost_Carbon[index][0].Price}}</th>
+                        </td>
+                        </tr>
+                        <tr>
+                          <td>Cost</td>
+                        <td v-for="(cost_Rebaritem, index) in cost_Carbon">
+                      
+                        <th v-for="item in cost_Rebaritem">{{cost_Carbon[index][0].Cost}}</th>
+                        </td>
+                        </tr>
+                          <tr>
+                          <td>Profit / Loss</td>
                           
-                            <th v-for="item in cost_Carbonitem">{{item}}</th>
-                            </tr>
-                          </table>
-                        </b-card>
+                        
+                        <td v-for="(cost_Rebaritem, index) in cost_Carbon">
+                      
+                        <th v-for="item in cost_Rebaritem">{{cost_Carbon[index][0].Profit}}</th>
+                        </td>
+                        </tr>
+                      </table>
                     </b-col>
                   </b-col>
                   <b-col class="shadow m-1 bg-white rounded" v-if="showround" v-b-modal.modal4 lazy>
@@ -84,14 +156,38 @@
                       style="width: 420; height: 330px;"
                     />
                      <b-col class="table-scroll"> 
-                        <b-card>
-                          <table class="table">
-                            <tr v-for="cost_Rounditem in cost_Round">
+                        <table class="table">
+                            <tr>
+                              <td>Date</td>
+                            <td v-for="(cost_Rebaritem, index) in cost_Round">
                           
-                            <th v-for="item in cost_Rounditem">{{item}}</th>
+                            <th v-for="item in cost_Rebaritem">{{cost_Round[index][0].Time}}</th>
+                            </td>
+                            </tr>
+                             <tr>
+                              <td>Production Price</td>
+                            <td v-for="(cost_Rebaritem, index) in cost_Round">
+                          
+                            <th v-for="item in cost_Rebaritem">{{cost_Round[index][0].Price}}</th>
+                            </td>
+                            </tr>
+                            <tr>
+                              <td>Cost</td>
+                            <td v-for="(cost_Rebaritem, index) in cost_Round">
+                          
+                            <th v-for="item in cost_Rebaritem">{{cost_Round[index][0].Cost}}</th>
+                            </td>
+                            </tr>
+                             <tr>
+                              <td>Profit / Loss</td>
+                              
+                           
+                            <td v-for="(cost_Rebaritem, index) in cost_Round">
+                          
+                            <th v-for="item in cost_Rebaritem">{{cost_Round[index][0].Profit}}</th>
+                            </td>
                             </tr>
                           </table>
-                        </b-card>
                     </b-col>
                   </b-col>
                   <b-col class="shadow m-1 bg-white rounded" v-if="showcold" v-b-modal.modal5 lazy>
@@ -102,14 +198,38 @@
                       style="width: 420; height: 330px;"
                     />
                     <b-col class="table-scroll"> 
-                        <b-card>
-                          <table class="table">
-                            <tr v-for="cost_Colditem in cost_Cold">
+                        <table class="table">
+                            <tr>
+                              <th>Date</th>
+                            <td v-for="(cost_Rebaritem, index) in cost_Cold">
                           
-                            <th v-for="item in cost_Colditem">{{item}}</th>
+                            <th v-for="item in cost_Rebaritem">{{cost_Cold[index][0].Time}}</th>
+                            </td>
+                            </tr>
+                             <tr>
+                              <td>Production Price</td>
+                            <td v-for="(cost_Rebaritem, index) in cost_Cold">
+                          
+                            <th v-for="item in cost_Rebaritem">{{cost_Rebar[index][0].Price}}</th>
+                            </td>
+                            </tr>
+                            <tr>
+                              <td>Cost</td>
+                            <td v-for="(cost_Rebaritem, index) in cost_Cold">
+                          
+                            <th v-for="item in cost_Rebaritem">{{cost_Cold[index][0].Cost}}</th>
+                            </td>
+                            </tr>
+                             <tr>
+                              <td>Profit / Loss</td>
+                              
+                           
+                            <td v-for="(cost_Rebaritem, index) in cost_Cold">
+                          
+                            <th v-for="item in cost_Rebaritem">{{cost_Cold[index][0].Profit}}</th>
+                            </td>
                             </tr>
                           </table>
-                        </b-card>
                     </b-col>
                   </b-col>
                   <b-col class="shadow m-1 bg-white rounded" v-if="showcolor" v-b-modal.modal6 lazy>
@@ -120,14 +240,38 @@
                       style="width: 420; height: 330px;"
                     />
                     <b-col class="table-scroll"> 
-                        <b-card>
-                          <table class="table">
-                            <tr v-for="cost_Coloritem in cost_Color">
+                      <table class="table">
+                        <tr>
+                          <td>Date</td>
+                        <td v-for="(cost_Rebaritem, index) in cost_Color">
+                      
+                        <th v-for="item in cost_Rebaritem">{{cost_Color[index][0].Time}}</th>
+                        </td>
+                        </tr>
+                          <tr>
+                          <td>Production Price</td>
+                        <td v-for="(cost_Rebaritem, index) in cost_Color">
+                      
+                        <th v-for="item in cost_Rebaritem">{{cost_Color[index][0].Price}}</th>
+                        </td>
+                        </tr>
+                        <tr>
+                          <td>Cost</td>
+                        <td v-for="(cost_Rebaritem, index) in cost_Color">
+                      
+                        <th v-for="item in cost_Rebaritem">{{cost_Color[index][0].Cost}}</th>
+                        </td>
+                        </tr>
+                          <tr>
+                          <td>Profit / Loss</td>
                           
-                            <th v-for="item in cost_Coloritem">{{item}}</th>
-                            </tr>
-                          </table>
-                        </b-card>
+                        
+                        <td v-for="(cost_Rebaritem, index) in cost_Color">
+                      
+                        <th>{{cost_Color[index][0].Profit}}</th>
+                        </td>
+                        </tr>
+                      </table>
                     </b-col>
                   </b-col>
                   <b-col class="shadow m-1 bg-white rounded" v-if="showGalvanized" v-b-modal.modal7 lazy>
@@ -138,14 +282,38 @@
                       style="width: 420; height: 330px;"
                     />
                     <b-col class="table-scroll"> 
-                        <b-card>
-                          <table class="table">
-                            <tr v-for="cost_cost_Galvanisheditem in cost_Galvanished">
+                      <table class="table">
+                        <tr>
+                          <td>Date</td>
+                        <td v-for="(cost_Rebaritem, index) in cost_Galvanished">
+                      
+                        <th v-for="item in cost_Rebaritem">{{cost_Color[index][0].Time}}</th>
+                        </td>
+                        </tr>
+                          <tr>
+                          <td>Production Price</td>
+                        <td v-for="(cost_Rebaritem, index) in cost_Galvanished">
+                      
+                        <th v-for="item in cost_Rebaritem">{{cost_Color[index][0].Price}}</th>
+                        </td>
+                        </tr>
+                        <tr>
+                          <td>Cost</td>
+                        <td v-for="(cost_Rebaritem, index) in cost_Galvanished">
+                      
+                        <th>{{cost_Galvanished[index][0].Cost}}</th>
+                        </td>
+                        </tr>
+                          <tr>
+                          <td>Profit / Loss</td>
                           
-                            <th v-for="item in cost_cost_Galvanisheditem">{{item}}</th>
-                            </tr>
-                          </table>
-                        </b-card>
+                        
+                        <td v-for="(cost_Rebaritem, index) in cost_Galvanished">
+                      
+                        <th>{{cost_Galvanished[index][0].Profit}}</th>
+                        </td>
+                        </tr>
+                      </table>
                     </b-col>
                   </b-col>
                   <b-col class="shadow m-1 bg-white rounded" v-if="showHRC" v-b-modal.modal8 lazy>
@@ -156,14 +324,38 @@
                       style="width: 420; height: 330px;"
                     />
                      <b-col class="table-scroll"> 
-                         <b-card>
-                          <table class="table">
-                            <tr v-for="cost_HRCitem in cost_HRC">
+                        <table class="table">
+                        <tr>
+                          <td>Date</td>
+                        <td v-for="(cost_Rebaritem, index) in cost_HRC" :key="`,cost_Rebaritem-${index}`">
+                      
+                        <th v-for="item in cost_Rebaritem">{{cost_HRC[index][0].Time}}</th>
+                        </td>
+                        </tr>
+                          <tr>
+                          <td>Production Price</td>
+                        <td v-for="(cost_Rebaritem, index) in cost_HRC">
+                      
+                        <th>{{cost_HRC[index][0].Price}}</th>
+                        </td>
+                        </tr>
+                        <tr>
+                          <td>Cost</td>
+                        <td v-for="(cost_Rebaritem, index) in cost_HRC">
+                      
+                        <th v-for="item in cost_Rebaritem">{{cost_HRC[index][0].Cost}}</th>
+                        </td>
+                        </tr>
+                          <tr>
+                          <td>Profit / Loss</td>
                           
-                            <th v-for="item in cost_HRCitem">{{item}}</th>
-                            </tr>
-                          </table>
-                         </b-card>
+                        
+                        <td v-for="(cost_Rebaritem, index) in cost_HRC">
+                      
+                        <th>{{cost_HRC[index][0].Profit}}</th>
+                        </td>
+                        </tr>
+                      </table>
                       </b-col>
                   </b-col>
                    <b-col class="shadow m-1 bg-white rounded" v-if="showWire" v-b-modal.modal9 lazy>
@@ -174,14 +366,38 @@
                       style="width: 605px; height: 330px;"
                     />
                     <b-col class="table-scroll"> 
-                        <b-card>
-                          <table class="table">
-                            <tr v-for="cost_Wireitem in cost_Wire">
+                      <table class="table">
+                        <tr>
+                          <td>Date</td>
+                        <td v-for="(cost_Rebaritem, index) in cost_HRC" :key="`,cost_Rebaritem-${index}`">
+                      
+                        <th v-for="item in cost_Rebaritem">{{cost_Wire[index][0].Time}}</th>
+                        </td>
+                        </tr>
+                          <tr>
+                          <td>Production Price</td>
+                        <td v-for="(cost_Rebaritem, index) in cost_Wire">
+                      
+                        <th>{{cost_Wire[index][0].Price}}</th>
+                        </td>
+                        </tr>
+                        <tr>
+                          <td>Cost</td>
+                        <td v-for="(cost_Rebaritem, index) in cost_Wire">
+                      
+                        <th v-for="item in cost_Rebaritem">{{cost_Wire[index][0].Cost}}</th>
+                        </td>
+                        </tr>
+                          <tr>
+                          <td>Profit / Loss</td>
                           
-                            <th v-for="item in cost_Wireitem">{{item}}</th>
-                            </tr>
-                          </table>
-                        </b-card>
+                        
+                        <td v-for="(cost_Rebaritem, index) in cost_HRC">
+                      
+                        <th>{{cost_Wire[index][0].Profit}}</th>
+                        </td>
+                        </tr>
+                      </table>
                     </b-col>
                   </b-col>
                 </b-col>
@@ -192,20 +408,20 @@
                 <b-col class="m-1 bg-white rounded padding right-div">
                     <h5>Headlines</h5>
                     
-                    <div class="shadow m-1 bg-white rounded padding margin-div" v-if="showcommon">
+                    <div class="m-1 bg-white rounded padding margin-div" v-if="showcommon">
                             <div v-for="(Newsitem, index) in News" class="shadow m-1 bg-white rounded padding text-left">
                               <b-link target="_blank" v-bind:href="URL[index]">
                                 <p>
-                                  {{News[index]}}
+                                  {{News[index]}} <span style="color: blue;">read more...</span>
                                 </p>
                               </b-link>
                             </div>
                     </div>
-                    <div class="shadow m-1 bg-white rounded padding margin-div" v-if="showrebar">
+                    <div class="m-1 bg-white rounded padding margin-div" v-if="showrebar">
                             <div v-for="(Newsitem, index) in RebarNews" class="shadow m-1 bg-white rounded padding text-left">
                               <b-link target="_blank" v-bind:href="URLRebar[index]">
                                 <p>
-                                  {{RebarNews[index]}}
+                                  {{RebarNews[index]}} <span style="color: blue;"></span>
                                 </p>
                               </b-link>
                             </div>
@@ -522,12 +738,14 @@
 </template>
 
 <script>
+
 import Restapi from '@/services/Restapi'
 export default {
   name: 'Home',
   data () {
     return {
        // Array will be automatically processed with visualization.arrayToDataTable function
+       dateArr:[],
       chartData: [
         ['Date', 'APAC', 'NAZ', 'South-Africa', 'Europe'],
         ],
@@ -546,44 +764,25 @@ export default {
         Cold: [
         ['Date', 'APAC', 'NAZ', 'South-Africa', 'Europe'],       
         ],
-      Galvanish: [
+        Galvanish: [
         ['Date', 'APAC', 'NAZ', 'South-Africa', 'Europe'],       
         ],
-      HRC: [
+        HRC: [
         ['Date', 'APAC', 'NAZ', 'South-Africa', 'Europe'],
         ],
         Wire: [
         ['Date', 'APAC', 'NAZ', 'South-Africa', 'Europe'],        
         ],
-        cost_HRC: [
-        ['Date', 'Cost', 'Price', 'ProfitLoss'],        
-        ],
-        cost_Common: [
-        ['Date', 'Cost', 'Price', 'ProfitLoss'],        
-        ],
-        cost_Rebar: [
-        ['Date', 'Cost', 'Price', 'ProfitLoss'],        
-        ],
-        cost_Carbon: [
-        ['Date', 'Cost', 'Price', 'ProfitLoss'],        
-        ],
-        cost_Wire: [
-          ['Date', 'Cost', 'Price', 'ProfitLoss'],
-        ],
-        cost_Round: [
-          ['Date', 'Cost', 'Price', 'ProfitLoss'],
-        ],
-        cost_Cold: [
-          ['Date', 'Cost', 'Price', 'ProfitLoss'],
-        ],
-        cost_Color: [
-          ['Date', 'Cost', 'Price', 'ProfitLoss'],
-        ],
-        cost_Galvanished: [
-          ['Date', 'Cost', 'Price', 'ProfitLoss'],
-        ],
-        News: [
-        ],
+        cost_HRC: [],
+        cost_Common: [],
+        cost_Rebar: [],
+        cost_Carbon: [],
+        cost_Wire: [],
+        cost_Round: [],
+        cost_Cold: [],
+        cost_Color: [],
+        cost_Galvanished: [],
+        News: [],
         RebarNews: [],
         CarbonNews: [],
         WireNews: [],
@@ -592,9 +791,7 @@ export default {
         ColorNews: [],
         GalNews: [],
         HRCNews: [],
-        URL: [
-          ['https://www.metalbulletin.com/Article/3841688/Steel-All/US-imported-line-pipe-prices-rise-in-face-of-quotas.html'],
-        ],
+        URL: [],
         URLRebar: [],
         URlCarbon: [],
 
@@ -644,7 +841,8 @@ export default {
               HRCNewsApi: [],
               urlSourceApi: [],
               urlrebarApi: [],
-              urlCarbonApi: []
+              urlCarbonApi: [],
+              dateApi: []
 
     }
   },
@@ -688,10 +886,10 @@ export default {
       this.showrebar = false;
       this.showround = false;
       this.showcold = false;
-      // this.showcolor = false;
-      // this.showGalvanized = false;
-      // this.showWire = false;
-      // this.showHRC = false;
+      this.showcolor = false;
+      this.showGalvanized = false;
+      this.showWire = false;
+      this.showHRC = false;
     },
     type3 () {
       this.showround = !this.showround
@@ -767,7 +965,6 @@ export default {
   console.log(r); 
   },
    randomVal: function (val) {
-    
     return Math.floor(Math.random(2) * (4500 - 3500) + 3500,2);
    },
     responseData(re){
@@ -775,16 +972,17 @@ export default {
       var result=re.data;
       console.log('result');
                 console.log(result);
+                console.log("result.Time");
                 var coldHeadingSteel= result.filter(val=>val.Material=='Cold heading steel 22A（18A）(Yuan/tonne)')
                  var galvanizedSteel= result.filter(val=>val.Material=='Galvanized steel 0.5mm(Yuan/tonne)')
                  var colorCoatedSteel= result.filter(val=>val.Material=='Color-coated steel 0.476mm(Yuan/tonne)')
                  var HRC= result.filter(val=>val.Material=='HRC 3.0(Yuan/tonne)')
                  var Rebar= result.filter(val=>val.Material=='Rebar HRB400 20MM(Yuan/tonne)')
                  var wireRod= result.filter(val=>val.Material=='Wire rod Φ8mm HPB300 high speed wire rodHPB300(Yuan/tonne)')
-                 var commonCarbonRoundSteel= result.filter(val=>val.Material=='common carbon round steel Φ20(Yuan/tonne)')
+                 var commonCarbonRoundSteel= result.filter(val=>val.Material=='common carbon round steel Φ20(Yuan/tonne)' && val.Heading!='')
                  var roundBearingSteel= result.filter(val=>val.Material=='Round bearing steel 50mm(连铸)(Yuan/tonne)')
                  var carbonStructuralSteel= result.filter(val=>val.Material=='Carbon structural steel 50mm(Yuan/tonne)')
-                 
+                
                  //Printing cost and price
                  var costcoldHead= result.filter(val=>val.Material=='Cold heading steel 22A（18A）(Yuan/tonne)')
                  var costgalvanizedSteel= result.filter(val=>val.Material=='Galvanized steel 0.5mm(Yuan/tonne)')
@@ -794,11 +992,15 @@ export default {
                  var costwireRod= result.filter(val=>val.Material=='Wire rod Φ8mm HPB300 high speed wire rodHPB300(Yuan/tonne)')
                  var costcommonCarbonRoundSteel= result.filter(val=>val.Material=='common carbon round steel Φ20(Yuan/tonne)')
                  var costroundBearingSteel= result.filter(val=>val.Material=='Round bearing steel 50mm(连铸)(Yuan/tonne)')
-                 var costcarbonStructuralSteel= result.filter(val=>val.Material=='Carbon structural steel 50mm(Yuan/tonne)') 
-                
-                //news printing
-                // var news = result.filter(val=>val.Material=='Cold heading steel 22A（18A）(Yuan/tonne)');
-                // var source = result.filter(val=>val.Material=='Cold heading steel 22A（18A）(Yuan/tonne)');
+                 var costcarbonStructuralSteel= result.filter(val=>val.Material=='Carbon structural steel 50mm(Yuan/tonne)')
+
+
+                this.dateApi.push(result);
+                this.dateApi=this.dateApi[0];
+                this.dateApi.filter(val=>val.Material=='common carbon round steel Φ20(Yuan/tonne)').forEach(element => {
+                   this.dateArr.push(element.Time)
+                 });
+                this.dateArr=JSON.parse(JSON.stringify(this.dateArr));
 
                 this.newsApi.push(commonCarbonRoundSteel);
                 this.newsApi=this.newsApi[0];
@@ -879,7 +1081,6 @@ export default {
                   this.URLRebar.push(element.URL)
                 });
                 this.URLRebar=JSON.parse(JSON.stringify(this.URLRebar));
-                console.log(URL);
 
                 this.urlCarbonApi.push(Rebar);
                 this.urlCarbonApi=this.urlCarbonApi[0];
@@ -888,7 +1089,6 @@ export default {
                   this.URlCarbon.push(element.URL)
                 });
                 this.URlCarbon=JSON.parse(JSON.stringify(this.URlCarbon));
-                console.log(URL);
 
                 //Working of cost
                 this.costHRCApi.push(costHRC);
@@ -914,7 +1114,7 @@ export default {
 
                 this.costColdApi.push(costcoldHead);
                 this.costColdApi=this.costColdApi[0];
-                console.log(this.costColdApi[0]);
+                // console.log(this.costColdApi[0]);
 
                 this.costColorApi.push(costcolorCoatedSteel);
                 this.costColorApi=this.costColorApi[0];
@@ -941,7 +1141,8 @@ export default {
                  this.roundBearingSteelApi=this.roundBearingSteelApi[0];
                  this.carbonStructuralSteelApi.push(carbonStructuralSteel);
                  this.carbonStructuralSteelApi=this.carbonStructuralSteelApi[0];
-                 console.log(this.RebarApi[0]);
+                 console.log(this.RebarApi[0].Time);
+
                  this.commonCarbonRoundSteelApi.forEach(element => {
                    this.chartData.push([element.Time,parseInt(element.Price),this.randomVal(),this.randomVal(),this.randomVal()])
                  });
@@ -989,75 +1190,121 @@ export default {
 
                 //cost working
                 this.costHRCApi.forEach(element => {
-                   this.cost_HRC.push([element.Time,element.Price,parseInt(element.Cost),
-                    (parseInt(element.Price) - element.Cost)
-                   ])
+                   this.cost_HRC.push([{
+                    "Time":element.Time,
+                    "Price":element.Price,
+                    "Cost":parseInt(element.Cost),
+                  
+                    "Profit":(parseInt(element.Price) - element.Cost)
+                  }])
                  });
                 this.cost_HRC=JSON.parse(JSON.stringify(this.cost_HRC));
 
                 this.costCommonApi.forEach(element => {
-                  this.cost_Common.push([element.Time,element.Price,parseInt(element.Cost),
-                    (parseInt(element.Price) - element.Cost)
-                    ])
+                  this.cost_Common.push([{
+                    "Time":element.Time,
+                    "Price":element.Price,
+                    "Cost":parseInt(element.Cost),
+                    "Profit":(parseInt(element.Price) - element.Cost)
+                  }]
+                    )
                 });
                 this.cost_Common=JSON.parse(JSON.stringify(this.cost_Common));
 
                 this.costRebarApi.forEach(element => {
-                  this.cost_Rebar.push([element.Time,element.Price,parseInt(element.Cost),
-                    (parseInt(element.Price) - element.Cost)
-                    ])
+                  this.cost_Rebar.push([{
+                    "Time":element.Time,
+                    "Price":element.Price,
+                    "Cost":parseInt(element.Cost),
+                  
+                    "Profit":(parseInt(element.Price) - element.Cost)
+                  }])
                 });
                 this.cost_Rebar=JSON.parse(JSON.stringify(this.cost_Rebar));
 
+                console.log(this.cost_Rebar[0][0].Time);
+                
                 this.costCarbonApi.forEach(element => {
-                  this.cost_Carbon.push([element.Time,element.Price,parseInt(element.Cost),
-                    (parseInt(element.Price) - element.Cost)
-                    ])
+                  this.cost_Carbon.push([{
+                    "Time":element.Time,
+                    "Price":element.Price,
+                    "Cost":parseInt(element.Cost),
+                  
+                    "Profit":(parseInt(element.Price) - element.Cost)
+                  }])
                 });
                 this.cost_Carbon=JSON.parse(JSON.stringify(this.cost_Carbon));
 
                 this.costwireRodApi.forEach(element => {
-                  this.cost_Wire.push([element.Time,element.Price,parseInt(element.Cost),
-                    (parseInt(element.Price) - element.Cost)
-                    ])
+                  this.cost_Wire.push([{
+
+                  
+                    "Time":element.Time,
+                    "Price":element.Price,
+                    "Cost":parseInt(element.Cost),
+                  
+                    "Profit":(parseInt(element.Price) - element.Cost)
+                  }])
                 });
                 this.cost_Wire=JSON.parse(JSON.stringify(this.cost_Wire));
 
                 this.costRoundApi.forEach(element => {
-                  this.cost_Round.push([element.Time,element.Price,parseInt(element.Cost),
-                    (parseInt(element.Price) - element.Cost)
-                    ])
+                  this.cost_Round.push([{
+                    "Time":element.Time,
+                    "Price":element.Price,
+                    "Cost":parseInt(element.Cost),
+                  
+                    "Profit":(parseInt(element.Price) - element.Cost)
+                  }])
                 });
                 this.cost_Round=JSON.parse(JSON.stringify(this.cost_Round));
 
                 this.costColdApi.forEach(element => {
-                  this.cost_Cold.push([element.Time,element.Price,parseInt(element.Cost),
-                    (parseInt(element.Price) - element.Cost)
-                    ])
+                  this.cost_Cold.push([{
+                    "Time":element.Time,
+                    "Price":element.Price,
+                    "Cost":parseInt(element.Cost),
+                  
+                    "Profit":(parseInt(element.Price) - element.Cost)
+                  }])
                 });
                 this.cost_Cold=JSON.parse(JSON.stringify(this.cost_Cold));
 
                 this.costColorApi.forEach(element => {
-                  this.cost_Color.push([element.Time,element.Price,parseInt(element.Cost),
-                    (parseInt(element.Price) - element.Cost)
-                    ])
+                  this.cost_Color.push([{
+
+                  
+                    "Time":element.Time,
+                    "Price":element.Price,
+                    "Cost":parseInt(element.Cost),
+                  
+                    "Profit":(parseInt(element.Price) - element.Cost)
+                  }])
                 });
                 this.cost_Color=JSON.parse(JSON.stringify(this.cost_Color));
 
                 this.costGalvanizedApi.forEach(element => {
-                  this.cost_Galvanished.push([element.Time,element.Price,parseInt(element.Cost),
-                    (parseInt(element.Price) - element.Cost)
-                    ])
+                  this.cost_Galvanished.push([{
+
+                  
+                    "Time":element.Time,
+                    "Price":element.Price,
+                    "Cost":parseInt(element.Cost),
+                  
+                    "Profit":(parseInt(element.Price) - element.Cost)
+                  }])
                 });
                 this.cost_Galvanished=JSON.parse(JSON.stringify(this.cost_Galvanished));
     }
-
   }
   
 }
 </script>
 
 <style scoped>
+ul li {
+		display: inline;
+	}
   .no-scroll {
     /* overflow: hidden; */
     height: 550px;
@@ -1083,7 +1330,7 @@ export default {
   }
   table{
     font-size: 12px;
-    font-weight: 300;
+    font-weight: 100;
     padding: 0% !important;
     overflow-y: scroll;
     height: 80px;
@@ -1108,18 +1355,19 @@ export default {
   .table-scroll{
     width: 670px;
     overflow-x: auto;
-    height: 180px;
+    height: 200px;
     border: none;
   }
   td{
-    height: 45px;
-    padding: 14px;
+    height: 30px;
+    padding: 4px;
     border-bottom: solid 1px;
   }
   th{
     height: 30px;
-    width: 20px;
-    padding: 4px;
+    padding: 5px;
+    font-weight: 400;
+    border: none;
   }
   .heading{
     font-size: 14px;
@@ -1131,8 +1379,7 @@ export default {
   }
   p{
     font-size: 16px;
-    font-weight: 500;
-    margin:10px;
+    font-weight: 300;
   }
   .right-div{
     height: 620px;
