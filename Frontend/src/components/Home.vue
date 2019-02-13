@@ -7,27 +7,23 @@
             <b-col>
               <b-row>
                 <b-col class="shadow m-1 no-padding scroll">
-                  <!-- <input type="text" v-model="start">
-                  <span>{{start}}</span> -->
-                  
-                  <b-nav class="b-nav-item">
-                    <b-nav-item @click="type" v-b-popover.hover="'Common carbon round steel'">CS Steel
-                      <!-- <b-button variant="outline-success" size="sm">CS Steel</b-button> -->
+                  <b-nav fill tabs>
+                    <b-nav-item @click="type('common carban')" v-b-popover.hover="'Common carbon round steel'">CS Steel
                     </b-nav-item>
-                    <b-nav-item @click="type1" v-b-popover.hover="'Rebar'">Rebar</b-nav-item>
-                    <b-nav-item @click="type2" v-b-popover.hover="'Carbon structural steel'">CS steel</b-nav-item>
-                    <b-nav-item @click="type8" v-b-popover.hover="'Wire Rod'">Wire Rod</b-nav-item>
-                    <b-nav-item @click="type3" v-b-popover.hover="'Round Bearing steel'">RB steel</b-nav-item>
-                    <b-nav-item @click="type4" v-b-popover.hover="'Cold Heading Steel'">CH steel</b-nav-item>
-                    <b-nav-item @click="type5" v-b-popover.hover="'Color-Coated Steel'">CC steel</b-nav-item>
-                    <b-nav-item @click="type20" v-b-popover.hover="'Galvanized steel'">Galvanized steel</b-nav-item>
-                    <b-nav-item @click="type7" v-b-popover.hover="'Hot Rolled Coiled'">HRC</b-nav-item>
+                    <b-nav-item @click="type1('rebar')" v-b-popover.hover="'Rebar'">Rebar</b-nav-item>
+                    <b-nav-item @click="type2('Carbon structural')" v-b-popover.hover="'Carbon structural steel'">CS Steel</b-nav-item>
+                    <b-nav-item @click="type8('wire rod')" v-b-popover.hover="'Wire Rod'">Wire Rod</b-nav-item>
+                    <b-nav-item @click="type3('Round Bearing steel')" v-b-popover.hover="'Round Bearing steel'">RB Steel</b-nav-item>
+                    <b-nav-item @click="type4('cold')" v-b-popover.hover="'cold heading steel'">CH Steel</b-nav-item>
+                    <b-nav-item @click="type5('Color-Coated Steel')" v-b-popover.hover="'Color-Coated Steel'">CC Steel</b-nav-item>
+                    <b-nav-item @click="type6('Galvanized steel')" v-b-popover.hover="'Galvanized steel'">Galvanized Steel</b-nav-item>
+                    <b-nav-item @click="type7('hrc')" v-b-popover.hover="'Hot Rolled Coiled'">HRC</b-nav-item>
                   </b-nav>
                 </b-col>
               </b-row>
               <b-row>
                <b-col class="no-scroll">
-                 <b-col class="shadow m-1 bg-white rounded" v-if="showcommon" v-b-modal.modal1 lazy>
+                 <b-col class="shadow m-1 bg-white rounded" v-if="showcommon" @click="modalcommon = !modalcommon" lazy>
                     <GChart
                       type="LineChart"
                       :data="chartData"
@@ -66,8 +62,8 @@
                             </tr>
                           </table>
                       </b-col>
-                  </b-col>
-                  <b-col class="shadow m-1 bg-white rounded" v-if="showrebar" v-b-modal.modal2 lazy>
+                </b-col>
+                  <b-col class="shadow m-1 bg-white rounded" v-if="showrebar" @click="modalrebar = !modalrebar" lazy>
                      <GChart
                       type="LineChart"
                       :data="Rebar"
@@ -98,7 +94,7 @@
                             </td>
                             </tr>
                              <tr>
-                              <td>Profit / Loss</td>
+                              <td class="profit">Profit / Loss</td>
                               
                            
                             <td v-for="(cost_Rebaritem, index) in cost_Rebar" :key="`,cost_Rebaritem-${index}`">
@@ -109,7 +105,7 @@
                           </table>
                     </b-col>
                   </b-col>
-                  <b-col class="shadow m-1 bg-white rounded" v-if="showcarbon" v-b-modal.modal3 lazy>
+                  <b-col class="shadow m-1 bg-white rounded" v-if="showcarbon" @click="modalcarbon = !modalcarbon" lazy>
                    <GChart
                       type="LineChart"
                       :data="Carbon"
@@ -140,7 +136,7 @@
                         </td>
                         </tr>
                           <tr>
-                          <td>Profit / Loss</td>
+                          <td class="profit">Profit / Loss</td>
                         <td v-for="(cost_Rebaritem, index) in cost_Carbon" :key="`,cost_Rebaritem-${index}`">
                       
                         <th>{{cost_Carbon[index][0].Profit}}</th>
@@ -149,7 +145,7 @@
                       </table>
                     </b-col>
                   </b-col>
-                  <b-col class="shadow m-1 bg-white rounded" v-if="showround" v-b-modal.modal4 lazy>
+                  <b-col class="shadow m-1 bg-white rounded" v-if="showround" @click="modalround = !modalround" lazy>
                     <GChart
                       type="LineChart"
                       :data="Round"
@@ -180,7 +176,7 @@
                             </td>
                             </tr>
                              <tr>
-                              <td>Profit / Loss</td>
+                              <td class="profit">Profit / Loss</td>
                               
                            
                             <td v-for="(cost_Rebaritem, index) in cost_Round" :key="`,cost_Rebaritem-${index}`">
@@ -191,7 +187,8 @@
                           </table>
                     </b-col>
                   </b-col>
-                  <b-col class="shadow m-1 bg-white rounded" v-if="showcold" v-b-modal.modal5 lazy>
+                  
+                  <b-col class="shadow m-1 bg-white rounded" v-if="showcold" @click="modalcold = !modalcold" lazy>
                     <GChart
                       type="LineChart"
                       :data="Cold"
@@ -199,39 +196,41 @@
                       style="width: 420; height: 330px;"
                     />
                     <b-col class="table-scroll"> 
-                        <table class="table">
-                            <tr>
-                              <th>Date</th>
-                            <td v-for="(cost_Rebaritem, index) in cost_Cold" :key="`,cost_Rebaritem-${index}`">
+                      <table class="table">
+                        <tr>
+                          <td>Date</td>
+                        <td v-for="(cost_Rebaritem, index) in cost_Cold" :key="`,cost_Rebaritem-${index}`">
+                      
+                        <th>{{cost_Cold[index][0].Time}}</th>
+                        </td>
+                        </tr>
+                          <tr>
+                          <td>Production Price</td>
+                        <td v-for="(cost_Rebaritem, index) in cost_Cold" :key="`,cost_Rebaritem-${index}`">
+                      
+                        <th>{{cost_Cold[index][0].Price}}</th>
+                        </td>
+                        </tr>
+                        <tr>
+                          <td>Cost</td>
+                        <td v-for="(cost_Rebaritem, index) in cost_Cold" :key="`,cost_Rebaritem-${index}`"> 
+                      
+                        <th>{{cost_Cold[index][0].Cost}}</th>
+                        </td>
+                        </tr>
+                          <tr>
+                          <td class="profit">Profit / Loss</td>
                           
-                            <th>{{cost_Cold[index][0].Time}}</th>
-                            </td>
-                            </tr>
-                             <tr>
-                              <td>Production Price</td>
-                            <td v-for="(cost_Rebaritem, index) in cost_Cold" :key="`,cost_Rebaritem-${index}`"> 
-                          
-                            <th>{{cost_Rebar[index][0].Price}}</th>
-                            </td>
-                            </tr>
-                            <tr>
-                              <td>Cost</td>
-                            <td v-for="(cost_Rebaritem, index) in cost_Cold" :key="`,cost_Rebaritem-${index}`">
-                          
-                            <th>{{cost_Cold[index][0].Cost}}</th>
-                            </td>
-                            </tr>
-                             <tr>
-                              <td>Profit / Loss</td>
-                            <td v-for="(cost_Rebaritem, index) in cost_Cold" :key="`,cost_Rebaritem-${index}`">
-                          
-                            <th>{{cost_Cold[index][0].Profit}}</th>
-                            </td>
-                            </tr>
-                          </table>
+                        
+                        <td v-for="(cost_Rebaritem, index) in cost_Cold" :key="`,cost_Rebaritem-${index}`">
+                      
+                        <th>{{cost_Cold[index][0].Profit}}</th>
+                        </td>
+                        </tr>
+                      </table>
                     </b-col>
                   </b-col>
-                  <b-col class="shadow m-1 bg-white rounded" v-if="showcolor" v-b-modal.modal6 lazy>
+                  <b-col class="shadow m-1 bg-white rounded" v-if="showcolor" @click="modalcolor = !modalcolor" lazy>
                     <GChart
                       type="LineChart"
                       :data="Color"
@@ -262,7 +261,7 @@
                         </td>
                         </tr>
                           <tr>
-                          <td>Profit / Loss</td>
+                          <td class="profit">Profit / Loss</td>
                           
                         
                         <td v-for="(cost_Rebaritem, index) in cost_Color" :key="`,cost_Rebaritem-${index}`">
@@ -273,7 +272,7 @@
                       </table>
                     </b-col>
                   </b-col>
-                  <b-col class="shadow m-1 bg-white rounded" v-if="showGalvanized" v-b-modal.modal7 lazy>
+                  <b-col class="shadow m-1 bg-white rounded" v-if="showGalvanized" @click="modalgal = !modalgal" lazy>
                     <GChart
                       type="LineChart"
                       :data="Galvanish"
@@ -304,7 +303,7 @@
                         </td>
                         </tr>
                           <tr>
-                          <td>Profit / Loss</td>
+                          <td class="profit">Profit / Loss</td>
                           
                         
                         <td v-for="(cost_Rebaritem, index) in cost_Galvanished" :key="`,cost_Rebaritem-${index}`">
@@ -315,7 +314,7 @@
                       </table>
                     </b-col>
                   </b-col>
-                  <b-col class="shadow m-1 bg-white rounded" v-if="showHRC" v-b-modal.modal8 lazy>
+                  <b-col class="shadow m-1 bg-white rounded" v-if="showHRC" @click="modalHRC = !modalHRC" lazy>
                     <GChart
                       type="LineChart"
                       :data="HRC"
@@ -346,7 +345,7 @@
                         </td>
                         </tr>
                           <tr>
-                          <td>Profit / Loss</td>
+                          <td class="profit">Profit / Loss</td>
                           
                         
                         <td v-for="(cost_Rebaritem, index) in cost_HRC" :key="`,cost_Rebaritem-${index}`">
@@ -357,7 +356,7 @@
                       </table>
                       </b-col>
                   </b-col>
-                   <b-col class="shadow m-1 bg-white rounded" v-if="showWire" v-b-modal.modal9 lazy>
+                   <b-col class="shadow m-1 bg-white rounded" v-if="showWire" @click="modalwire = !modalwire" lazy>
                     <GChart
                       type="LineChart"
                       :data="Wire"
@@ -388,7 +387,7 @@
                         </td>
                         </tr>
                           <tr>
-                          <td>Profit / Loss</td>
+                          <td class="profit">Profit / Loss</td>
                           
                         
                         <td v-for="(cost_Rebaritem, index) in cost_Wire" :key="`,cost_Rebaritem-${index}`">
@@ -404,135 +403,209 @@
             </b-col>
              <b-col>
               <b-row>
-                <b-col class="m-1 bg-white rounded padding right-div">
-                    <h5>Headlines</h5>
+                <b-col cols="12" class="m-1 bg-white rounded padding right-div">
+                    <div class="shadow m-1 bg-white rounded padding">
+                      <h5>Media Alert</h5>
+                    </div>
                     
-                    <div class="shadow m-1 bg-white rounded padding text-left" v-if="showcommon">
-                            <div v-for="(test, index) in commontest" class="shadow m-1 bg-white rounded padding text-left">
-                              <b-link target="_blank" v-bind:href="commontest[index][0].link">
-                                <p class="margin-div">
-                                  {{commontest[index][0].headline}}<span style="color: blue;">read more...</span>
-                                  <br> 
-                                  <span>
-                                    Score : {{commontest[index][0].score}}
-                                  </span>
-                                </p>
-                              </b-link>
-                            </div>
+                    <div class="shadow m-1 bg-white rounded padding text-left margin-div" v-if="showcommon">
+                          <div v-for="(test, index) in test1" class="shadow m-1 bg-white rounded padding text-left">
+                            <p class="margin-div">
+
+                              <b-link target="_blank" v-bind:href="test1[index][0].link">
+                                  {{test1[index][0].headline}}<span style="color: blue;">read more...</span>
+                              </b-link>  
+                              <br>                          
+                              <b-container class="bv-example-row" style="font-size: 16px;">
+                                <b-row>
+                                    <b-col>
+                                Score : {{ test1[index][0].score }}
+                                    </b-col>
+                                    <b-col>
+                                Date : {{test1[index][0].date}}
+
+                                    </b-col>
+                                </b-row>
+                              </b-container>
+                            </p>
+                          </div>
                     </div>
                     <div class="m-1 bg-white rounded padding margin-div" v-if="showrebar">
-                            <div v-for="(test, index) in test1" class="shadow m-1 bg-white rounded padding text-left" :key="`,testitem-${index}`">
+                           <div v-for="(test, index) in test1" class="shadow m-1 bg-white rounded padding text-left">
+                            <p class="margin-div">
+
                               <b-link target="_blank" v-bind:href="test1[index][0].link">
-                                <p class="margin-div">
-                                  <!-- {{RebarNews[index]}} <span style="color: blue;">read more...</span> -->
                                   {{test1[index][0].headline}}<span style="color: blue;">read more...</span>
-                                  <br> 
-                                  <span>
-                                    Score : {{ test1[index][0].score }}
-                                  </span>
-                                </p>
-                              </b-link>
-                            </div>
+                              </b-link>  
+                              <br>                          
+                              <b-container class="bv-example-row" style="font-size: 16px;">
+                                <b-row>
+                                    <b-col>
+                                Score : {{ test1[index][0].score }}
+                                    </b-col>
+                                    <b-col>
+                                Date : {{test1[index][0].date}}
+
+                                    </b-col>
+                                </b-row>
+                              </b-container>
+                            </p>
+                          </div>
                     </div>
                     <div class="shadow m-1 bg-white rounded padding margin-div" v-if="showcarbon">
-                            <div v-for="(Newsitem, index) in carbontest" class="shadow m-1 bg-white rounded padding text-left" :key="`,testitem-${index}`">
-                              <b-link target="_blank" v-bind:href="carbontest[index][0].link">
-                                <p class="margin-div">
-                                  <!-- {{CarbonNews[index]}} <span style="color: blue;">read more...</span> -->
+                           <div v-for="(test, index) in test1" class="shadow m-1 bg-white rounded padding text-left">
+                            <p class="margin-div">
 
-                                  {{carbontest[index][0].headline}}<span style="color: blue;">read more...</span>
-                                  <br> 
-                                  <span>
-                                    Score : {{carbontest[index][0].score}}
-                                  </span>
-                                </p>
-                              </b-link>
-                            </div>
+                              <b-link target="_blank" v-bind:href="test1[index][0].link">
+                                  {{test1[index][0].headline}}<span style="color: blue;">read more...</span>
+                              </b-link>  
+                              <br>                          
+                              <b-container class="bv-example-row" style="font-size: 16px;">
+                                <b-row>
+                                    <b-col>
+                                Score : {{ test1[index][0].score }}
+                                    </b-col>
+                                    <b-col>
+                                Date : {{test1[index][0].date}}
+
+                                    </b-col>
+                                </b-row>
+                              </b-container>
+                            </p>
+                          </div>
                     </div>
                     <div class="shadow m-1 bg-white rounded padding margin-div" v-if="showWire">
-                            <div v-for="(Newsitem, index) in wiretest" class="shadow m-1 bg-white rounded padding text-left" :key="`,testitem-${index}`">
-                              <b-link target="_blank" v-bind:href="wiretest[index][0].link">
-                                <p class="margin-div">
-                                  <!-- {{WireNews[index]}} <span style="color: blue;">read more...</span> -->
-                                  {{wiretest[index][0].headline}}<span style="color: blue;">read more...</span>
-                                   <br> 
-                                  <span>
-                                    Score : {{wiretest[index][0].score}}
-                                  </span>
-                                </p>
-                              </b-link>
-                            </div>
+                            <div v-for="(test, index) in test1" class="shadow m-1 bg-white rounded padding text-left">
+                            <p class="margin-div">
+
+                              <b-link target="_blank" v-bind:href="test1[index][0].link">
+                                  {{test1[index][0].headline}}<span style="color: blue;">read more...</span>
+                              </b-link>  
+                              <br>                          
+                              <b-container class="bv-example-row" style="font-size: 16px;">
+                                <b-row>
+                                    <b-col>
+                                Score : {{ test1[index][0].score }}
+                                    </b-col>
+                                    <b-col>
+                                Date : {{test1[index][0].date}}
+
+                                    </b-col>
+                                </b-row>
+                              </b-container>
+                            </p>
+                          </div>
                     </div>
                     <div class="shadow m-1 bg-white rounded padding margin-div" v-if="showround">
-                            <div v-for="(Newsitem, index) in roundtest" class="shadow m-1 bg-white rounded padding text-left" :key="`,testitem-${index}`">
-                              <b-link target="_blank" v-bind:href="roundtest[index][0].link">
-                                <p class="margin-div">
-                                  <!-- {{RoundNews[index]}} <span style="color: blue;">read more...</span> -->
+                            <div v-for="(test, index) in test1" class="shadow m-1 bg-white rounded padding text-left">
+                            <p class="margin-div">
 
-                                  {{roundtest[index][0].headline}}<span style="color: blue;">read more...</span>
-                                  <br> 
-                                  <span>
-                                    Score : {{roundtest[index][0].score}}
-                                  </span>
-                                </p>
-                              </b-link>
-                            </div>
+                              <b-link target="_blank" v-bind:href="test1[index][0].link">
+                                  {{test1[index][0].headline}}<span style="color: blue;">read more...</span>
+                              </b-link>  
+                              <br>                          
+                              <b-container class="bv-example-row" style="font-size: 16px;">
+                                <b-row>
+                                    <b-col>
+                                Score : {{ test1[index][0].score }}
+                                    </b-col>
+                                    <b-col>
+                                Date : {{test1[index][0].date}}
+
+                                    </b-col>
+                                </b-row>
+                              </b-container>
+                            </p>
+                          </div>
                     </div>
                     <div class="shadow m-1 bg-white rounded padding margin-div" v-if="showcold">
-                            <div v-for="(Newsitem, index) in coldtest" class="shadow m-1 bg-white rounded padding text-left" :key="`,testitem-${index}`">
-                              <b-link target="_blank" v-bind:href="URL[index]">
-                                <p class="margin-div">
-                                  <!-- {{ColdNews[index]}} <span style="color: blue;">read more...</span> -->{{coldtest[index][0].headline}}<span style="color: blue;">read more...</span>
-                                   <br> 
-                                  <span>
-                                    Score : {{coldtest[index][0].score}}
-                                  </span>
-                                </p>
-                              </b-link>
-                            </div>
+                     <div v-for="(test, index) in test1" class="shadow m-1 bg-white rounded padding text-left">
+                            <p class="margin-div">
+
+                              <b-link target="_blank" v-bind:href="test1[index][0].link">
+                                  {{test1[index][0].headline}}<span style="color: blue;">read more...</span>
+                              </b-link>  
+                              <br>                          
+                              <b-container class="bv-example-row" style="font-size: 16px;">
+                                <b-row>
+                                    <b-col>
+                                Score : {{ test1[index][0].score }}
+                                    </b-col>
+                                    <b-col>
+                                Date : {{test1[index][0].date}}
+
+                                    </b-col>
+                                </b-row>
+                              </b-container>
+                            </p>
+                          </div>
                     </div>
+                    
                     <div class="shadow m-1 bg-white rounded padding margin-div" v-if="showcolor">
-                            <div v-for="(Newsitem, index) in colortest" class="shadow m-1 bg-white rounded padding text-left" :key="`,testitem-${index}`">
-                              <b-link target="_blank" v-bind:href="colortest[index][0].link">
-                                <p class="margin-div">
-                                  <!-- {{ColorNews[index]}} <span style="color: blue;">read more...</span> -->
-                                  {{colortest[index][0].headline}}<span style="color: blue;">read more...</span>
-                                  <br> 
-                                  <span>
-                                    Score : {{colortest[index][0].score}}
-                                  </span>
-                                </p>
-                              </b-link>
-                            </div>
+                           <div v-for="(test, index) in test1" class="shadow m-1 bg-white rounded padding text-left">
+                            <p class="margin-div">
+
+                              <b-link target="_blank" v-bind:href="test1[index][0].link">
+                                  {{test1[index][0].headline}}<span style="color: blue;">read more...</span>
+                              </b-link>  
+                              <br>                          
+                              <b-container class="bv-example-row" style="font-size: 16px;">
+                                <b-row>
+                                    <b-col>
+                                Score : {{ test1[index][0].score }}
+                                    </b-col>
+                                    <b-col>
+                                Date : {{test1[index][0].date}}
+
+                                    </b-col>
+                                </b-row>
+                              </b-container>
+                            </p>
+                          </div>
                     </div>
                     <div class="shadow m-1 bg-white rounded padding margin-div" v-if="showGalvanized">
-                            <div v-for="(Newsitem, index) in galtest" class="shadow m-1 bg-white rounded padding text-left" :key="`,testitem-${index}`">
-                              <b-link target="_blank" v-bind:href="galtest[index][0].link">
-                                <p class="margin-div">
-                                  <!-- {{GalNews[index]}} <span style="color: blue;">read more...</span> -->
+                           <div v-for="(test, index) in test1" class="shadow m-1 bg-white rounded padding text-left">
+                            <p class="margin-div">
 
-                                  {{galtest[index][0].headline}}<span style="color: blue;">read more...</span>
-                                  <br> 
-                                  <span>
-                                    Score : {{galtest[index][0].score}}
-                                  </span>
-                                </p>
-                              </b-link>
-                            </div>
+                              <b-link target="_blank" v-bind:href="test1[index][0].link">
+                                  {{test1[index][0].headline}}<span style="color: blue;">read more...</span>
+                              </b-link>  
+                              <br>                          
+                              <b-container class="bv-example-row" style="font-size: 16px;">
+                                <b-row>
+                                    <b-col>
+                                Score : {{ test1[index][0].score }}
+                                    </b-col>
+                                    <b-col>
+                                Date : {{test1[index][0].date}}
+
+                                    </b-col>
+                                </b-row>
+                              </b-container>
+                            </p>
+                          </div>
                     </div>
                     <div class="shadow m-1 bg-white rounded padding margin-div heading" v-if="showHRC">
-                        <div v-for="(Newsitem, index) in HRCtest" class="shadow m-1 bg-white rounded padding text-left" :key="`,testitem-${index}`">
-                          <b-link target="_blank" v-bind:href="HRCtest[index][0].link">
+                       <div v-for="(test, index) in test1" class="shadow m-1 bg-white rounded padding text-left">
                             <p class="margin-div">
-                              <!-- {{HRCNews[index]}} <span style="color: blue;">read more...</span> -->
-                              {{HRCtest[index][0].headline}}<span style="color: blue;">read more...</span>
-                               <br> 
-                                  <span>
-                                    Score : {{HRCtest[index][0].score}}
-                                  </span>
+
+                              <b-link target="_blank" v-bind:href="test1[index][0].link">
+                                  {{test1[index][0].headline}}<span style="color: blue;">read more...</span>
+                              </b-link>  
+                              <br>                          
+                              <b-container class="bv-example-row" style="font-size: 16px;">
+                                <b-row>
+                                    <b-col>
+                                Score : {{ test1[index][0].score }}
+                                    </b-col>
+                                    <b-col>
+                                Date : {{test1[index][0].date}}
+
+                                    </b-col>
+                                </b-row>
+                              </b-container>
                             </p>
-                          </b-link>
-                        </div>
+                          </div>
                     </div>
                 </b-col>
               </b-row>
@@ -541,7 +614,7 @@
         </b-col>
       </b-row>
     </b-container>
-    <b-modal id="modal1" size="lg"  title="Graphs of Zone" lazy>
+    <b-modal v-model="modalcommon" size="lg" title="Graphs of Zone" lazy>
         <b-card no-body>
           <b-tabs pills card>
             <b-tab title="Chart" active>
@@ -569,7 +642,7 @@
           </b-tabs>
         </b-card>
     </b-modal>
-    <b-modal id="modal2" size="lg" title="Graphs of Zone" lazy>
+    <b-modal v-model="modalrebar" size="lg" title="Graphs of Zone" lazy>
         <b-card no-body>
           <b-tabs pills card>
             <b-tab title="Chart" active>
@@ -597,7 +670,7 @@
           </b-tabs>
         </b-card>
     </b-modal>
-    <b-modal id="modal3" size="lg"  title="Graphs of Zone" lazy>
+    <b-modal v-model="modalcarbon" size="lg"  title="Graphs of Zone" lazy>
       <b-card no-body>
         <b-tabs pills card>
           <b-tab title="Chart" active>
@@ -623,7 +696,7 @@
         </b-tabs>
       </b-card> 
     </b-modal>
-    <b-modal id="modal4" size="lg" title="Graphs of Zone" lazy>
+    <b-modal v-model="modalround" size="lg" title="Graphs of Zone" lazy>
       <b-card no-body>
         <b-tabs pills card>
           <b-tab title="Chart" active>
@@ -649,7 +722,7 @@
         </b-tabs>
       </b-card>
     </b-modal>
-    <b-modal id="modal5" size="lg" title="Graphs of Zone" lazy>
+    <b-modal v-model="modalcold" size="lg" title="Graphs of Zone" lazy>
       <b-card no-body>
         <b-tabs pills card>
           <b-tab title="Chart" active>
@@ -675,7 +748,7 @@
         </b-tabs>
       </b-card>
     </b-modal>
-    <b-modal id="modal6" size="lg" title="Graphs of Zone" lazy>
+    <b-modal v-model="modalcolor" size="lg" title="Graphs of Zone" lazy>
       <b-card no-body>
         <b-tabs pills card>
           <b-tab title="Chart" active>
@@ -700,7 +773,7 @@
         </b-tabs>
       </b-card>
     </b-modal>
-    <b-modal id="modal7" size="lg" title="Graphs of Zone" lazy>
+    <b-modal v-model="modalgal" size="lg" title="Graphs of Zone" lazy>
       <b-card no-body>
         <b-tabs pills card>
           <b-tab title="Chart" active>
@@ -726,7 +799,7 @@
         </b-tabs>
       </b-card>
     </b-modal>
-    <b-modal id="modal8" size="lg" title="Graphs of Zone" lazy>
+    <b-modal v-model="modalHRC" size="lg" title="Graphs of Zone" lazy>
       <b-card no-body>
         <b-tabs pills card>
           <b-tab title="Chart" active>
@@ -752,7 +825,7 @@
         </b-tabs>
       </b-card>
     </b-modal>
-    <b-modal id="modal9" size="lg" title="Graphs of Zone" lazy>
+    <b-modal v-model="modalwire" size="lg" title="Graphs of Zone" lazy>
       <b-card no-body>
         <b-tabs pills card>
           <b-tab title="Chart" active>
@@ -783,6 +856,7 @@
 </template>
 
 <script>
+
 import Restapi from '@/services/Restapi'
 export default {
   name: 'Home',
@@ -815,15 +889,16 @@ export default {
         Wire: [
         ['Date', 'APAC', 'NAZ', 'South-Africa', 'Europe'],        
         ],
+        modalrebar: false,
+        modalcommon: false,
+        modalcarbon: false,
+        modalwire: false,
+        modalround: false,
+        modalcold: false,
+        modalcolor: false,
+        modalgal: false,
+        modalHRC: false,
         test1: [],
-        commontest: [],
-        carbontest: [],
-        wiretest: [],
-        coldtest: [],
-        roundtest:[],
-        colortest: [],
-        HRCtest: [],
-        galtest: [],
         testLink: [],
         cost_HRC: [],
         cost_Common: [],
@@ -900,19 +975,20 @@ export default {
   },
   mounted(){
     this.api();
-    this.api2();
-    this.api3();
-    this.api4();this.api5();this.api6();this.api7();this.api8();this.api9();this.api10();
+    //this.api2();
+    this.api2('common carban round');
   },
   filters: {
   randomVal: function (val) {
     
     return Math.floor(Math.random(2) * (4500 - 3500) + 3500,2);
-
-  }
+    }
 },
   methods: {
-    type () {
+
+    type (val) {
+      if(!this.showcommon){
+      this.api2(val)
       this.showcommon = !this.showcommon
       this.showrebar = false;
       this.showcarbon = false;
@@ -922,9 +998,11 @@ export default {
       this.showGalvanized = false;
       this.showWire = false;
       this.showHRC = false;
-
+      }
     },
-    type1 () {
+    type1 (val) {
+      if(!this.showrebar){
+         this.api2(val)
       this.showrebar = !this.showrebar
       this.showcommon = false;
       this.showcarbon = false;
@@ -934,8 +1012,27 @@ export default {
       this.showGalvanized = false;
       this.showWire = false;
       this.showHRC = false;
+      }
+      
     },
-    type2 () {
+    type4 (val) {
+      // if(!this.showcold){
+         this.api2(val)
+        //  console.log(this.api2(val));
+      this.showcold = !this.showcold
+      this.showcommon = false;
+      this.showcarbon = false;
+      this.showround = false;
+      // this.showcold = false;
+      this.showcolor = false;
+      this.showGalvanized = false;
+      this.showWire = false;
+      this.showHRC = false;
+      // }
+    },
+    type2 (val) {
+      if(!this.showcarbon){
+          this.api2(val)
       this.showcarbon = !this.showcarbon
       this.showcommon = false;
       this.showrebar = false;
@@ -945,8 +1042,11 @@ export default {
       this.showGalvanized = false;
       this.showWire = false;
       this.showHRC = false;
+      }
     },
-    type3 () {
+    type3 (val) {
+      if(!this.showround){
+          this.api2(val)
       this.showround = !this.showround
       this.showcommon = false;
       this.showrebar = false;
@@ -956,30 +1056,25 @@ export default {
       this.showGalvanized = false;
       this.showWire = false;
       this.showHRC = false;
+      }
     },
-    type4 () {
-      this.showcold = !this.showcold
-       this.showcommon = false;
-      this.showrebar = false;
-      this.showcolor = false;
-      this.showround = false;
-      this.showcarbon = false;
-      this.showGalvanized = false;
-      this.showWire = false;
-      this.showHRC = false;
-    },
-    type5 () {
+    type5 (val) {
+      if(!this.showcolor){
+        this.api2(val)
       this.showcolor = !this.showcolor
       this.showcommon = false;
       this.showrebar = false;
       this.showround = false;
       this.showcarbon = false;
       this.showcold = false;
-      // this.showGalvanized = false;
+      this.showGalvanized = false;
       this.showWire = false;
       this.showHRC = false;
+    }
     },
-    type20 () {
+    type6 (val) {
+      if(!this.showGalvanized){
+        this.api2(val);      
       this.showGalvanized = !this.showGalvanized
       this.showcommon = false;
       this.showrebar = false;
@@ -989,8 +1084,11 @@ export default {
       this.showcolor = false;
       this.showWire = false;
       this.showHRC = false;
+      }
     },
-    type7 () {
+    type7 (val) {
+      if(!this.showHRC){
+        this.api2(val);
       this.showHRC = !this.showHRC
       this.showcommon = false;
       this.showrebar = false;
@@ -1000,9 +1098,11 @@ export default {
       this.showcolor = false;
       this.showWire = false;
       this.showGalvanized = false;
-
+      }
     },
-    type8 () {
+    type8 (val) {
+      if(!this.showWire){
+        this.api2(val);
       this.showWire = !this.showWire
       this.showGalvanized = false;
       this.showcommon = false;
@@ -1012,260 +1112,35 @@ export default {
       this.showcarbon = false;
       this.showcolor = false;
       this.showHRC = false;
+      }
     },
 
-    api2:function(){
-      var r = Restapi.RebarData(this.responsecallRebar).then((s) => {
-      console.log('Result Data----');
-      console.log(s);
+    api2:function(val){
+      this.test1=[];
+      var r = Restapi.RebarData(val).then((s) => {
+      console.log('Result Data---- rebar');
+      console.log(s.data);
+
       this.responsecallRebar(s)
       });
       console.log(r);
       },
 
-      api3:function(){
-      var r = Restapi.commonData(this.responsecallCommon).then((s) => {
-      console.log('Result Data---- common');
-      console.log(s);
-      this.responsecallCommon(s)
-      });
-      console.log(r);
-      },
-
-      api4:function(){
-      var r = Restapi.carbonData(this.responsecallcarbon).then((s) => {
-      console.log('Result Data---- common');
-      console.log(s);
-      this.responsecallcarbon(s)
-      });
-      console.log(r);
-      },
-
-      api5:function(){
-      var r = Restapi.wireData(this.responsecallwire).then((s) => {
-      console.log('Result Data---- wire');
-      console.log(s);
-      this.responsecallwire(s)
-      });
-      console.log(r);
-      },
-
-      api6:function(){
-      var r = Restapi.wireData(this.responsecallround).then((s) => {
-      console.log('Result Data---- round');
-      console.log(s);
-      this.responsecallround(s)
-      });
-      console.log(r);
-      },
-
-      api7:function(){
-      var r = Restapi.wireData(this.responsecallcold).then((s) => {
-      console.log('Result Data---- cold');
-      console.log(s);
-      this.responsecallcold(s)
-      });
-      console.log(r);
-      },
-
-      api8:function(){
-      var r = Restapi.colorData(this.responsecallcolor).then((s) => {
-      console.log('Result Data---- color');
-      console.log(s);
-      this.responsecallcolor(s)
-      });
-      console.log(r);
-      },
-
-       api9:function(){
-      var r = Restapi.galvanishedData(this.responsecallgal).then((s) => {
-      console.log('Result Data---- color');
-      console.log(s);
-      this.responsecallgal(s)
-      });
-      console.log(r);
-      },
-
-      api10:function(){
-      var r = Restapi.HRCData(this.responsecallHRC).then((s) => {
-      console.log('Result Data---- color');
-      console.log(s);
-      this.responsecallHRC(s)
-      });
-      console.log(r);
-      },
-    //Api functions
-
     responsecallRebar(re) {
-      var resultOther = re.data;
-      console.log('result api');
+      console.log('result api bhumi');
       // console.log(resultOther);
-      this.testApiRebar.push(resultOther);
-      this.testApiRebar = this.testApiRebar[0];
 
-      this.testApiRebar.forEach(element => {
+      re.data.forEach(element => {
                   this.test1.push([{
                     "headline":element.Headline,
                     "score":element.Score,
-                    "link":element.URL
+                    "link":element.URL,
+                    "date": element.Date
                   }])
-                });
-                this.test1=JSON.parse(JSON.stringify(this.test1));
-        console.log(this.test1[0][0]);
-      resultOther.forEach(element => {
-        this.testLink.push(element.URL)
+                })
+        console.log("testtt22");
 
-         console.log(this.testApiRebar[0]);
-      });
-
-        // console.log(this.testLink.URL);
-    },
-
-    responsecallCommon(re) {
-      var resultOther = re.data;
-      console.log('result api common');
-      console.log(resultOther);
-      resultOther.forEach(element => {
-        this.commontest.push([{
-                    "headline":element.Headline,
-                    "score":element.Score,
-                    "link":element.URL
-                  }])
-        });
-        // console.log("common" + this.test1[0][0]);
-      resultOther.forEach(element => {
-        this.testLink.push(element.URL)
-      });
-
-        // console.log(this.testLink.URL);
-    },
-
-    responsecallcarbon(re) {
-      var resultOther = re.data;
-      console.log('result api carbon');
-      console.log(resultOther);
-      resultOther.forEach(element => {
-        this.carbontest.push([{
-                    "headline":element.Headline,
-                    "score":element.Score,
-                    "link":element.URL
-                  }])
-        });
-        // console.log("common" + this.test1[0][0]);
-      resultOther.forEach(element => {
-        this.testLink.push(element.URL)
-      });
-
-        // console.log(this.testLink.URL);
-    },
-
-    responsecallwire(re) {
-      var resultOther = re.data;
-      console.log('result api  wire');
-      console.log(resultOther);
-      resultOther.forEach(element => {
-        this.wiretest.push([{
-                    "headline":element.Headline,
-                    "score":element.Score,
-                    "link":element.URL
-                  }])
-        });
-        // console.log("common" + this.test1[0][0]);
-      resultOther.forEach(element => {
-        this.testLink.push(element.URL)
-      });
-
-        // console.log(this.testLink.URL);
-    },
-
-    responsecallround(re) {
-      var resultOther = re.data;
-      console.log('result api  round');
-      console.log(resultOther);
-      resultOther.forEach(element => {
-        this.roundtest.push([{
-                    "headline":element.Headline,
-                    "score":element.Score,
-                    "link":element.URL
-                  }])
-        });
-        // console.log("common" + this.test1[0][0]);
-      resultOther.forEach(element => {
-        this.testLink.push(element.URL)
-      });
-
-        // console.log(this.testLink.URL);
-    },
-
-    responsecallcold(re) {
-      var resultOther = re.data;
-      console.log('result api cold');
-      console.log(resultOther);
-      resultOther.forEach(element => {
-        this.coldtest.push([{
-                    "headline":element.Headline,
-                    "score":element.Score,
-                    "link":element.URL
-                  }])
-        });
-        // console.log("common" + this.test1[0][0]);
-      resultOther.forEach(element => {
-        this.testLink.push(element.URL)
-      });
-
-        // console.log(this.testLink.URL);
-    },
-
-    responsecallcolor(re) {
-      var resultOther = re.data;
-      console.log('result api  color');
-      console.log(resultOther);
-      resultOther.forEach(element => {
-        this.colortest.push([{
-                    "headline":element.Headline,
-                    "score":element.Score,
-                    "link":element.URL
-                  }])
-        });
-        // console.log("common" + this.test1[0][0]);
-      resultOther.forEach(element => {
-        this.testLink.push(element.URL)
-      });
-
-        // console.log(this.testLink.URL);
-    },
-
-    responsecallgal(re) {
-      var resultOther = re.data;
-      console.log('result api  gal');
-      console.log(resultOther);
-      resultOther.forEach(element => {
-        this.galtest.push([{
-                    "headline":element.Headline,
-                    "score":element.Score,
-                    "link":element.URL
-                  }])
-        });
-        // console.log("common" + this.test1[0][0]);
-      resultOther.forEach(element => {
-        this.testLink.push(element.URL)
-      });
-
-        // console.log(this.testLink.URL);
-    },
-
-    responsecallHRC(re) {
-      var resultOther = re.data;
-      console.log('result api  gal');
-      console.log(resultOther);
-      resultOther.forEach(element => {
-        this.HRCtest.push(element.Headline)
-        });
-        // console.log("common" + this.test1[0][0]);
-      resultOther.forEach(element => {
-        this.testLink.push(element.URL)
-      });
-
+        console.log(this.test1);
         // console.log(this.testLink.URL);
     },
 
@@ -1338,14 +1213,14 @@ export default {
                  });
                 this.RoundNews=JSON.parse(JSON.stringify(this.RoundNews));
                 
-                this.coldNewsApi.push(coldHeadingSteel = result.filter(val=>val.Material=='Cold heading steel 22A（18A）(Yuan/tonne)' && val.Heading!=''));
+                this.coldNewsApi.push(costcoldHead = result.filter(val=>val.Material=='Cold heading steel 22A（18A）(Yuan/tonne)' && val.Heading!=''));
                 this.coldNewsApi=this.coldNewsApi[0];
                 this.coldNewsApi.forEach(element => {
                    this.ColdNews.push(element.Heading)
                  });
                 this.ColdNews=JSON.parse(JSON.stringify(this.ColdNews));
 
-                this.colorNewsApi.push(colorCoatedSteel = result.filter(val=>val.Material=='Color-coated steel 0.476mm(Yuan/tonne)' && val.Heading!=''));
+                this.colorNewsApi.push(costcolorCoatedSteel = result.filter(val=>val.Material=='Color-coated steel 0.476mm(Yuan/tonne)' && val.Heading!=''));
                 this.colorNewsApi=this.colorNewsApi[0];
                 this.colorNewsApi.forEach(element => {
                    this.ColorNews.push(element.Heading)
@@ -1359,7 +1234,7 @@ export default {
                  });
                 this.GalNews=JSON.parse(JSON.stringify(this.GalNews));
 
-                this.HRCNewsApi.push(HRC = result.filter(val=>val.Material=='HRC 3.0(Yuan/tonne)' && val.Heading!=''));
+                this.HRCNewsApi.push(costHRC = result.filter(val=>val.Material=='HRC 3.0(Yuan/tonne)' && val.Heading!=''));
                 this.HRCNewsApi=this.HRCNewsApi[0];
                 this.HRCNewsApi.forEach(element => {
                    this.HRCNews.push(element.Heading)
@@ -1409,7 +1284,7 @@ export default {
                 this.costwireRodApi=this.costwireRodApi[0];
                 // console.log(this.costwireRodApi[0]);
 
-                this.costRoundApi.push(roundBearingSteel);
+                this.costRoundApi.push(costroundBearingSteel);
                 this.costRoundApi=this.costRoundApi[0];
 
                 this.costColdApi.push(coldHeadingSteel);
@@ -1593,7 +1468,6 @@ export default {
                 this.cost_Galvanished=JSON.parse(JSON.stringify(this.cost_Galvanished));
     }
   }
-  
 }
 </script>
 
@@ -1604,6 +1478,8 @@ ul li {
   .no-scroll {
     /* overflow: hidden; */
     height: 550px;
+    max-width: 735px;
+
   }
   #home {
     text-align: center;
@@ -1618,7 +1494,8 @@ ul li {
   }
   .scroll{
     font-size: 14px;
-    max-width: 100%;
+    font-weight: 500;
+    max-width: 735px;
   }
   ::-webkit-scrollbar {
     width: 0px;  /* remove scrollbar space */
@@ -1653,6 +1530,7 @@ ul li {
   }
   .profit{
     color:#bb1212;
+    font-weight: 500;
   }
   .table-scroll{
     width: 670px;
@@ -1664,11 +1542,12 @@ ul li {
     height: 30px;
     padding: 4px;
     border-bottom: solid 1px;
+    font-weight: 500;
   }
   th{
     height: 30px;
     padding: 5px;
-    font-weight: 400;
+    font-weight: 300;
     border: none;
   }
   .heading{
