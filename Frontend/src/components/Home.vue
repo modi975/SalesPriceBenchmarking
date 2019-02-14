@@ -7,16 +7,16 @@
             <b-col>
               <b-row>
                 <b-col class="shadow m-1 no-padding scroll">
-                  <b-nav fill tabs>
-                    <b-nav-item @click="type('common carban')" v-b-popover.hover="'Common carbon round steel'">CS Steel
+                  <b-nav>
+                    <b-nav-item @click="type('common+carban')" v-b-popover.hover="'Common carbon round steel'">CS Steel
                     </b-nav-item>
                     <b-nav-item @click="type1('rebar')" v-b-popover.hover="'Rebar'">Rebar</b-nav-item>
-                    <b-nav-item @click="type2('Carbon structural')" v-b-popover.hover="'Carbon structural steel'">CS Steel</b-nav-item>
-                    <b-nav-item @click="type8('wire rod')" v-b-popover.hover="'Wire Rod'">Wire Rod</b-nav-item>
-                    <b-nav-item @click="type3('Round Bearing steel')" v-b-popover.hover="'Round Bearing steel'">RB Steel</b-nav-item>
-                    <b-nav-item @click="type4('cold')" v-b-popover.hover="'cold heading steel'">CH Steel</b-nav-item>
-                    <b-nav-item @click="type5('Color-Coated Steel')" v-b-popover.hover="'Color-Coated Steel'">CC Steel</b-nav-item>
-                    <b-nav-item @click="type6('Galvanized steel')" v-b-popover.hover="'Galvanized steel'">Galvanized Steel</b-nav-item>
+                    <b-nav-item @click="type2('Carbon+structural')" v-b-popover.hover="'Carbon structural steel'">CS Steel</b-nav-item>
+                    <b-nav-item @click="type8('wire+rod')" v-b-popover.hover="'Wire Rod'">Wire Rod</b-nav-item>
+                    <b-nav-item @click="type3('Round+Bearing+steel')" v-b-popover.hover="'Round Bearing steel'">RB Steel</b-nav-item>
+                    <b-nav-item @click="type4('cold+heading+steel')" v-b-popover.hover="'cold heading steel'">CH Steel</b-nav-item>
+                    <b-nav-item @click="type5('Color-Coated+Steel')" v-b-popover.hover="'Color-Coated Steel'">CC Steel</b-nav-item>
+                    <b-nav-item @click="type6('Galvanized+steel')" v-b-popover.hover="'Galvanized steel'">Galvanized Steel</b-nav-item>
                     <b-nav-item @click="type7('hrc')" v-b-popover.hover="'Hot Rolled Coiled'">HRC</b-nav-item>
                   </b-nav>
                 </b-col>
